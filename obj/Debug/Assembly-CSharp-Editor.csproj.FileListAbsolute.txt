@@ -1,0 +1,2 @@
+C:\Users\Dallin\Documents\Repos\Unity\BattleBalls\obj\Debug\Assembly-CSharp-Editor.csprojAssemblyReference.cache
+C:\Users\Dallin\Documents\Repos\Unity\BattleBalls\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache
