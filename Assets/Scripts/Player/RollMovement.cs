@@ -7,11 +7,14 @@ public class RollMovement : MonoBehaviour
 {
    public Rigidbody RigidBody;
    public Camera Camera;
-   // Start is called before the first frame update
-   void Start()
-   {
 
+   public float jumpHeight = 400f;
+   private void Update()
+   {
+      if (Input.GetButton("Fire1") && !inAir)
+         RigidBody.AddForce(GroundNormal * jumpHeight);
    }
+
    public float MinGroundTorque = 20;
    public float MaxTorque = 30;
    public float CurrentGroundTorque = 20;
@@ -37,11 +40,15 @@ public class RollMovement : MonoBehaviour
    public void OnCollisionStay(Collision collision)
    {
       _AdjustForGround(collision,.2f);
-
+      
    }
    void _AdjustForGround(Collision collision, float influence)
    {
-      var point = collision.GetContact(0).normal;
+      Vector3 point = collision.contacts[0].normal;
+
+      for (int i = 1; i < collision.contacts.Length; i++)
+         if (collision.contacts[i].normal.y > point.y)
+            point = collision.GetContact(i).normal;
       //if (point.y > 0)
       //{
       _GroundNormal = Vector3.Lerp(_GroundNormal, point, influence);
@@ -61,6 +68,7 @@ public class RollMovement : MonoBehaviour
       {
          inAir = true;
       }
+      
    }
    bool inAir = false;
    public bool InAir
@@ -132,6 +140,8 @@ public class RollMovement : MonoBehaviour
          //AirMoveDirection.Scale(new Vector3(airSpeed, airSpeed, airSpeed));
          //RigidBody.AddForce(AirMoveDirection, ForceMode.Acceleration);
       }
+
+
 
    }
 
